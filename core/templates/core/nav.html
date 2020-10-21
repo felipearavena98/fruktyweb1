@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-frukty">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'home' %}">
+        <img src="{% static 'core/vendor/img/logo-frukty2.png' %}" width="30" height="30" class="d-inline-block align-top"
+          alt="" loading="lazy">
+        Frukty
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ned" aria-controls="ned"
+        aria-expanded="false">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="ned">
+      {% if user.id_tipo_usuario.pk == 4 %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Transportes
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Registrar transporte</a>
+            <a class="dropdown-item" href="#">Completar transporte</a>
+          </div>
+        </li>
+        {% endif %}
+        <ul class="navbar-nav ml-auto">
+          {% if not request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Acceder</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'signup' %}">Registro</a>
+          </li>
+          {% else %}
+          <span class="navbar-text">
+            <i class="far fa-user-circle fa-lg"></i>{{user.username}}
+          </span>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Salir</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>

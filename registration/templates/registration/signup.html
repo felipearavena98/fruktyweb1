@@ -9,7 +9,7 @@
       <div class="col-md-9 mx-auto mb-5">
         <form action="" method="post">{% csrf_token %}
           <h3 class="mb-4">Registro</h3>
-          {{form}}
+          {{form.as_p}}
           <p><input type="submit" class="btn btn-primary btn-block" value="Confirmar"></p>
         </form>
       </div>

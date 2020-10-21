@@ -26,8 +26,8 @@ class TipoUsuario(models.Model):
         managed = False
         db_table = 'tipo_usuario'
 
-
-
+    def __str__(self):
+        return str(self.id_tipo_usuario)
 
 
 from django.contrib.auth.models import AbstractBaseUser,BaseUserManager,PermissionsMixin
@@ -79,4 +79,27 @@ class Usuario(AbstractBaseUser, PermissionsMixin, models.Model):
         db_table = 'usuario'
 
     def __str__(self):
-        return f'{self.nombre},{self.apellido}'
+        return f'{self.nombre} {self.apellido}'
+
+
+OPCION_TAMANIO = [
+    ('Grande','Grande'),
+    ('Mediano', 'Mediano'),
+    ('Pequeño', 'Pequeño'),
+]
+
+OPCION_REFRI = [
+    ('S','Si'),
+    ('N', 'No'),
+]
+
+class Transporte(models.Model):
+    id_transporte = models.AutoField(primary_key=True)
+    tamanio = models.CharField(max_length=20, choices=OPCION_TAMANIO)
+    capacidad_carga = models.CharField(max_length=150)
+    refrigeracion = models.CharField(max_length=1, choices=OPCION_REFRI)
+    id_cliente = models.ForeignKey(Usuario, models.DO_NOTHING, db_column='id_cliente')
+
+    class Meta:
+        managed = False
+        db_table = 'transporte'
