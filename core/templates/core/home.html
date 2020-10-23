@@ -14,24 +14,31 @@
         </ol>
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img src="{% static 'core/vendor/img/frutas.jpg' %}" class="d-block w-100" alt="...">
+            <img class="img-fluid" id="carousel-img" src="{% static 'core/vendor/img/frutas2.jpg' %}"
+              class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+              {% if not request.user.is_authenticated %}
+              <h5>Frukty</h5>
+              <p>Registrese para acceder a todos nuestros servicios.</p>
+              <button class="btn btn-sm" id="btn-carousel">Registrarse</button>
+              {% else %}
+              <h5>Frukty</h5>
+              <p>Gracias por preferirnos.</p>
+              {% endif %}
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img class="img-fluid" src="{% static 'core/vendor/img/frutas2.jpg' %}" class="d-block w-100" alt="...">
             <div class="carousel-caption d-none d-md-block">
               <h5>Frukty</h5>
-              <p>Productos de calidad, economicos y siempre frescos.</p>
+              <p>Productos de calidad. Con el mejor servicio.</p>
             </div>
           </div>
           <div class="carousel-item">
-            <img src="{% static 'core/vendor/img/frutas.jpg' %}" class="d-block w-100" alt="...">
+            <img class="img-fluid" src="{% static 'core/vendor/img/frutas2.jpg' %}" class="d-block w-100" alt="...">
             <div class="carousel-caption d-none d-md-block">
-              <h5>Second slide label</h5>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <img src="{% static 'core/vendor/img/frutas.jpg' %}" class="d-block w-100" alt="...">
-            <div class="carousel-caption d-none d-md-block">
-              <h5>Third slide label</h5>
-              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+              <h5>Frukty</h5>
+              <p>Entregas rapidas siempre. En cualquier parte del mundo.</p>
             </div>
           </div>
         </div>
@@ -45,23 +52,33 @@
         </a>
       </div>
     </div>
+  </div>
+  <h2 class="text-center display-3">Nuestras caracteristicas</h2>
+  <hr>
+  <div class="row">
     <div class="col-lg-6 text-center">
       <h2 class="text-center">Calidad</h2>
       <p><i class="fas fa-check fa-3x"></i></p>
-      <span>Los mejores productos, desde todas partes del pais.</span>
+      <span>Los mejores productos, desde todas partes del pais. <br> Para todo el mundo.</span>
+      <hr>
     </div>
     <div class="col-lg-6 text-center">
       <h2 class="text-center">Conveniencia</h2>
       <p><i class="fas fa-dollar-sign fa-3x"></i></p>
-      <span>Precios siempre convenientes para usted y su negocio.</span>
+      <span>Precios siempre convenientes para usted y su negocio. <br> Nuestro compromiso.</span>
+      <hr>
     </div>
   </div>
   <div class="row">
     <div class="col-lg-6 offset-lg-3 segunda-home text-center">
+      <hr>
       <h2 class="text-center">Rapidez</h2>
       <p><i class="far fa-clock fa-3x"></i></p>
-      <span>Gracias a nuestra cadena de abastecimiento siempre tendrá sus productos en el menor tiempo posible, viva donde viva.</span>
+      <span>Gracias a nuestra cadena de abastecimiento siempre tendrá sus productos en el menor tiempo posible. <br>
+        Viva donde viva.</span>
+      <hr>
     </div>
   </div>
+</div>
 </div>
 {% endblock %}

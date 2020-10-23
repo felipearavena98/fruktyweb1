@@ -2,7 +2,10 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <div class="container">
-    <h2>Registro</h2>
+    <div class="jumbotron">
+        <h1 class="display-4">Registro</h1>
+        <p class="lead">Llene los datos solicitados y podrá tener una cuenta para ser parte de Frukty.</p>
+    </div>
     <form method="POST" class="post-form">{% csrf_token %}
         {{ form|crispy }}
         <button type="submit" class="btn btn-primary">Guardar</button>

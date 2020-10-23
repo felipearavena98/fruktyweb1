@@ -17,53 +17,76 @@
 
 <body>
 
-  <body>
+  <body onload="startTime()">
     <!-- Navegación -->
     <nav class="navbar navbar-expand-lg navbar-light bg-frukty">
-      <div class="container">
-        <a class="navbar-brand" href="{% url 'home' %}">
-          <img src="{% static 'core/vendor/img/logo-frukty2.png' %}" width="30" height="30"
-            class="d-inline-block align-bottom" alt="" loading="lazy">
-          Frukty
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            {% if user.id_tipo_usuario.pk == 4 %}
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                Transportes
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{% url 'registroTransporte' %}">Registrar transporte</a>
-                <a class="dropdown-item" href="{% url 'listaTransportes' %}">Ver mis transportes</a>
-                <a class="dropdown-item" href="#">Completar transporte</a>
-              </div>
-            </li>
-            {% endif %}
-          </ul>
-          <ul class="navbar-nav ml-auto">
-            {% if not request.user.is_authenticated %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'login' %}">Acceder</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'registro' %}">Registro</a>
-            </li>
-            {% else %}
-            <span class="navbar-text">
-              <i class="far fa-user-circle fa-lg"></i>{{user.username}}
-            </span>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'logout' %}">Salir</a>
-            </li>
-            {% endif %}
-          </ul>
-        </div>
+      <a class="navbar-brand" href="{% url 'home' %}">
+        <img src="{% static 'core/vendor/img/logo-frukty2.png' %}" width="30" height="30"
+          class="d-inline-block align-bottom" alt="" loading="lazy">
+        Frukty
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          {% if user.id_tipo_usuario.pk == 4 %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Transportes
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'registroTransporte' %}">Registrar transporte</a>
+              <a class="dropdown-item" href="{% url 'listaTransportes' %}">Ver mis transportes</a>
+              <a class="dropdown-item" href="#">Completar transporte</a>
+            </div>
+          </li>
+          {% endif %}
+          {% if user.id_tipo_usuario.pk == 5 %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Pedidos
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'nuevoPedido' %}">Nuevo pedido</a>
+              <a class="dropdown-item" href="{% url 'listaPedidos' %}">Mis pedidos</a>
+            </div>
+          </li>
+          {% endif %}
+          {% if user.id_tipo_usuario.pk == 3 %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Productos
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'nuevoProducto' %}">Nuevo producto</a>
+            </div>
+          </li>
+          {% endif %}
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <li id="time" class="navbar-text">
+          </li>
+          {% if not request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Acceder</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'registro' %}">Registro</a>
+          </li>
+          {% else %}
+          <span class="navbar-text">
+            <i class="far fa-user-circle fa-lg"></i>{{user.username}}
+          </span>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Salir</a>
+          </li>
+          {% endif %}
+        </ul>
     </nav>
     <!-- Contenido -->
     {% block content %}{% endblock %}
@@ -145,5 +168,7 @@
     <!-- Javascript -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{% static 'core/vendor/bootstrap/js/bootstrap.js' %}"></script>
+    <script src="{% static 'core/vendor/bootstrap/js/main.js' %}"></script>
   </body>
+
 </html>

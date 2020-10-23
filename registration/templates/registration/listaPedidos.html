@@ -1,0 +1,34 @@
+{% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-4">Listado de pedidos</h1>
+        <p class="lead">Aqui puede ver todos sus pedidos, tanto pendientes, completados o enviados.</p>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead class="table-danger">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Tipo de venta</th>
+                <th scope="col">Estado pedido</th>
+                <th scope="col">Producto comprado</th>
+                <th scope="col">Cantidad</th>
+            </tr>
+        </thead>
+        {% for pedido in lista %}
+        <tbody>
+            <tr>
+                <td>{{pedido.0}}</td>
+                <td>{{pedido.1}}</td>
+                <td>{{pedido.2}}</td>
+                <td>{{pedido.4}} / {{pedido.5}}</td>
+                <td>{{pedido.3}} unidades.</td>
+
+            </tr>
+        </tbody>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

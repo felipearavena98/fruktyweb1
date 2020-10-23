@@ -19,9 +19,29 @@
     color: rgb(0, 80, 0);;
 }
 
-/* Please Subscribe My Youtube Channel
-https://www.youtube.com/channel/UCQM5ye1xR4vJgtga0ryud2Q/
-*/
+#time {
+    margin-right: 10px;
+}
+
+#btn-carousel {
+    background-color: rgb(0, 44, 7);
+}
+
+#btn-carousel:hover, #btn-carousel:focus, #btn-carousel.active {
+    background: #dc4b4b;
+    color: #fff;
+    -webkit-box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    -ms-box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    -o-box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    -webkit-transition: all 250ms ease-in-out 0s;
+    -moz-transition: all 250ms ease-in-out 0s;
+    -ms-transition: all 250ms ease-in-out 0s;
+    -o-transition: all 250ms ease-in-out 0s;
+    transition: all 250ms ease-in-out 0s;
+}
+
 
 /*==================== 
 	Footer 
@@ -156,7 +176,7 @@ footer.light .footer-copyright {
 }
 
 .widget li a:hover {
-    color: #4b92dc;
+    color: #dc4b4b;
 }
 
 .widget-title {
@@ -225,7 +245,7 @@ ul.social-footer2 li a {
 }
 
 .btn:hover, .btn:focus, .btn.active {
-    background: #4b92dc;
+    background: #dc4b4b;
     color: #fff;
     -webkit-box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);

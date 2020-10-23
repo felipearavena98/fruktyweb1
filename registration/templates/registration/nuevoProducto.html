@@ -1,0 +1,65 @@
+{% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-4">Nuevo producto</h1>
+        <p class="lead">Para crear una solicitud y poder vender sus productos ingrese todos los datos solicitados. En
+            breve un administrador aprovará su solicitud si está todo correcto.</p>
+        {% if mensaje == 1%}
+        <div class="alert alert-success" role="alert">
+            Producto ingresado correctamente.
+        </div>
+        {% endif %}
+        {% if mensaje == 0 %}
+        <div class="alert alert-warning" role="alert">
+            Error al ingresar producto.
+        </div>
+        {% endif %}
+    </div>
+    <form method="POST" class="post-form">{% csrf_token %}
+        <div class="row">
+            <div class="col-lg-4">
+                <label for="inputNombre">Escriba el nombre del producto:</label>
+                <input class="form-control" type="text" name="inputNombre" id="inputNombre" required
+                    placeholder="Ejemplo: Sandía">
+            </div>
+            <div class="col-lg-8">
+                <label for="inputDescripcion">Escriba una breve descripcion del producto:</label>
+                <textarea class="form-control" placeholder="Ejemplo: Sandia proveniente de Paine, excelente calidad" id="inputDescripcion" name="inputDescripcion" rows="2" cols="50">
+                </textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <label for="comboFormato">Seleccione el formato del producto:</label>
+                <select class="form-control" name="comboFormato" id="comboFormato" required>
+                    <option selected disabled value="">Seleccione un valor</option>
+                    <option value=1>Caja</option>
+                    <option value=2>Unidad</option>
+                </select>
+            </div>
+            <div class="col-lg-4">
+                <label for="comboCalidad">Seleccione la calidad del producto:</label>
+                <select class="form-control" name="comboCalidad" id="comboCalidad" required>
+                    <option selected disabled value="">Seleccione un valor</option>
+                    <option value=1>Premium</option>
+                    <option value=2>Normal</option>
+                    <option value=3>Baja</option>
+                </select>
+            </div>
+            <div class="col-lg-4">
+
+                <label for="inputCantidad">Escriba la cantidad disponible del producto:</label>
+                <input class="form-control" type="number" name="inputCantidad" id="inputCantidad" required
+                    placeholder="Ejemplo: 25">
+            </div>
+        </div>
+        <label for="inputPrecio">Escriba el precio unitario del producto en CLP:</label>
+        <input class="form-control" type="number" name="inputPrecio" id="inputPrecio" required
+            placeholder="Si indica por ejemplo: 1000 y su formato es 'Caja', cada caja tendrá ese valor.">
+        <br>
+        <button type="submit" class="btn btn-primary">Realizar solicitud de ingreso</button>
+    </form>
+</div>
+{% endblock %}

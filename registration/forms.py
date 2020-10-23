@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
-from .models import Usuario, Transporte
+from .models import Usuario, Transporte, ProcesoVenta, BrProductosProcesoDeVenta
 from django.forms import ModelForm
 
 
@@ -85,4 +85,12 @@ class TransporteForm(forms.ModelForm):
         'capacidad_carga':("Capacidad de carga en KG.")
         }
 
+class ProcesoForm(forms.ModelForm):
+    class Meta:
+        model = ProcesoVenta
+        fields = ['tipo_venta']
 
+class BrProductosProcesoForm(forms.ModelForm):
+    class Meta:
+        model = BrProductosProcesoDeVenta
+        fields = ['cantidad']
