@@ -231,6 +231,7 @@ class Producto(models.Model):
     id_calidad = models.ForeignKey(CalidadProducto, models.DO_NOTHING, db_column='id_calidad')
     id_formato = models.ForeignKey(FormatoProducto, models.DO_NOTHING, db_column='id_formato')
     id_inventario = models.ForeignKey(Inventario, models.DO_NOTHING, db_column='id_inventario', blank=True, null=True)
+    precio_unitario = models.IntegerField(db_column='precio_unitario')
 
     class Meta:
         managed = False

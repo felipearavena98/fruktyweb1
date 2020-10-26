@@ -1,0 +1,94 @@
+{% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-4">Pago de pedido recepcionado.</h1>
+        <p class="lead">Proceda al pago, indicando los datos necesarios.</p>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            {% for pedido in lista %}
+            <h2>Informacion pedido:</h2>
+            <table class="table table-bordered table-hover">
+                <tr>
+                    <th class="table-danger">ID:</th>
+                    <td>{{pedido.0}}</td>
+                </tr>
+                <tr>
+                    <th class="table-danger">Tipo venta:</th>
+                    <td>{{pedido.1}}</td>
+                </tr>
+                <tr>
+                    <th class="table-danger">Estado:</th>
+                    <td>En pago</td>
+                </tr>
+                <tr>
+                    <th class="table-danger">Producto:</th>
+                    <td>{{pedido.4}} / {{pedido.5}}</td>
+                </tr>
+                <tr>
+                    <th class="table-danger">Cantidad:</th>
+                    <td>{{pedido.3}} unidades.</td>
+                </tr>
+                <tr>
+                    <th class="table-danger">Fecha:</th>
+                    <td>{{pedido.6}}</td>
+                </tr>
+                <tr>
+                    <th class="table-danger">Total a pagar:</th>
+                    <td>${{pedido.7}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-lg-6">
+            <form method="POST" class="post-form" action="{% url 'pago' %}">{% csrf_token %}
+                <h2>Datos de pago:</h2>
+                <div class="form-row">
+                    <input type="number" class="form-control col-sm-10" name="inputId" id="inputId" value="{{pedido.0}}"
+                        readonly hidden/>
+                </div>
+                <div class="form-row">
+                    <label class="col-sm-2 col-form-label" for="name">IVA:</label>
+                    <input type="number" class="form-control col-sm-10" name="inputIva" id="inputIva" value="{{iva}}"
+                        readonly />
+                </div>
+                <div class="form-row">
+                    <label class="col-sm-2 col-form-label" for="name">Envío:</label>
+                    <input type="number" class="form-control col-sm-10" name="inputEnvio" id="inputEnvio"
+                        value="{{envio}}" readonly />
+                </div>
+                <div class="form-row">
+                    <label class="col-sm-2 col-form-label" for="name">Aduana:</label>
+                    <input type="number" class="form-control col-sm-10" name="inputAduana" id="inputAduana"
+                        value="{{aduana}}" readonly />
+                </div>
+                <div class="form-row">
+                    <label class="col-sm-2 col-form-label" for="name">Comision:</label>
+                    <input type="number" class="form-control col-sm-10" name="inputComision" id="inputComision"
+                        value="{{comision}}" readonly />
+                </div>
+                <div class="form-row">
+                    <label class="col-sm-2 col-form-label" for="name">Servicios:</label>
+                    <input type="number" class="form-control col-sm-10" name="inputServicios" id="inputServicios"
+                        value="{{servicios}}" readonly />
+                </div>
+                <div class="form-row">
+                    <label class="col-sm-2 col-form-label" for="name">Cuotas</label>
+                    <input type="number" class="form-control col-sm-10" name="inputCuotas" id="inputCuotas" min="0" max="12" required/>
+                </div>
+                <br>
+                <div class="form-row">
+                    <h4 class="col-sm-2 ">Total:</h4>
+                    <input type="number" class="form-control col-sm-10" name="inputTotal" id="inputTotal"
+                        value="{{total}}" hidden />
+                    <h4>${{total}} CLP</h4>
+                </div>
+                <br>
+                <button id="btnPago" class="btn" type="submit">Pagar</button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
