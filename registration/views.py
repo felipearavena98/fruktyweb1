@@ -79,12 +79,12 @@ def lista_transportes(request):
     return render(request, 'registration/listaTransportes.html', {'transportes': transportes})
 
 
-def pedido(tipo_venta, id_producto, cantidad, id_usuario, fecha):
+def pedido(tipo_venta, id_producto, cantidad, id_cliente, fecha):
     django_cursor = connection.cursor()
     cursor = django_cursor.connection.cursor()
     salida = cursor.var(cx_Oracle.NUMBER)
     cursor.callproc('sp_agregar_orden_proceso', [
-                    tipo_venta, id_producto, cantidad, id_usuario, fecha, salida])
+                    tipo_venta, id_producto, cantidad, id_cliente, fecha, salida])
     return salida.getvalue()
 
 
@@ -107,9 +107,9 @@ def nuevo_Pedido(request):
         tipo_venta = request.POST.get('comboTipoVenta')
         id_producto = request.POST.get('comboProducto')
         cantidad = request.POST.get('inputCantidad')
-        id_usuario = request.user.id_cliente
+        id_cliente = request.user.id_cliente
         fecha = datetime.datetime.now().strftime("%d-%m-%Y")
-        salida = pedido(tipo_venta, id_producto, cantidad, id_usuario, fecha)
+        salida = pedido(tipo_venta, id_producto, cantidad, id_cliente, fecha)
         mensaje = salida
     else:
         mensaje = ''
@@ -154,12 +154,12 @@ def lista_pedidos(request):
     return render(request, 'registration/listaPedidos.html', {'lista': lista})
 
 
-def producto(nombre, descripcion, cantidad, calidad, formato, precio_unitario, id_usuario):
+def producto(nombre, descripcion, cantidad, calidad, formato, precio_unitario, id_cliente):
     django_cursor = connection.cursor()
     cursor = django_cursor.connection.cursor()
     salida = cursor.var(cx_Oracle.NUMBER)
     cursor.callproc('sp_producto_inventario', [
-                    nombre, descripcion, cantidad, calidad, formato, precio_unitario, id_usuario, salida])
+                    nombre, descripcion, cantidad, calidad, formato, precio_unitario, id_cliente, salida])
     return salida.getvalue()
 
 
@@ -172,9 +172,9 @@ def nuevo_Producto(request):
         calidad = request.POST.get('comboCalidad')
         formato = request.POST.get('comboFormato')
         precio_unitario = request.POST.get('inputPrecio')
-        id_usuario = request.user.id_cliente
+        id_cliente = request.user.id_cliente
         salida = producto(nombre, descripcion, cantidad,
-                          calidad, formato, precio_unitario, id_usuario)
+                          calidad, formato, precio_unitario, id_cliente)
         mensaje = salida
     else:
         mensaje = ''
