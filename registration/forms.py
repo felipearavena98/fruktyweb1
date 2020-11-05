@@ -66,7 +66,7 @@ class UsuarioForm(forms.ModelForm):
     class Meta:
         model = Usuario
         fields = ['rut', 'nombre', 'apellido',
-                  'direccion', 'telefono', 'email', 'username','password']
+                  'direccion', 'telefono', 'email', 'username', 'password']
         widgets = {
             'password': forms.PasswordInput(attrs={'placeholder': "Ingrese su contraseña."}),
             'username': forms.TextInput(attrs={'placeholder': "Ingrese su nombre de usuario a utilizar"}),
@@ -75,20 +75,26 @@ class UsuarioForm(forms.ModelForm):
             'username': ("Nombre de usuario:")
         }
 
+
 class TransporteForm(forms.ModelForm):
     class Meta:
         model = Transporte
         fields = ('__all__')
-        exclude = ['id_transporte','id_cliente']
-        labels = {
-        'tamanio': ("Tamaño de su transporte:"),
-        'capacidad_carga':("Capacidad de carga en KG.")
+        exclude = ['id_transporte', 'id_cliente']
+        widgets = {
+            'capacidad_carga': forms.NumberInput(attrs={'placeholder': "Ingrese la capacidad maxima", 'max':30000}),
         }
+        labels = {
+            'tamanio': ("Tamaño de su transporte:"),
+            'capacidad_carga': ("Capacidad de carga en KG.")
+        }
+
 
 class ProcesoForm(forms.ModelForm):
     class Meta:
         model = ProcesoVenta
         fields = ['tipo_venta']
+
 
 class BrProductosProcesoForm(forms.ModelForm):
     class Meta:
