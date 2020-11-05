@@ -1,0 +1,53 @@
+{% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-4">Nuevo pedido</h1>
+        <p class="lead">Para crear su pedido ingrese el tipo de venta (nacional o extranjera) y posteriormente un
+            producto de los disponibles y la cantidad deseada.</p>
+        {% if mensaje == 1%}
+        <div class="alert alert-success" role="alert">
+            Pedido ingresado correctamente.
+        </div>
+        {% endif %}
+        {% if mensaje == 0 %}
+        <div class="alert alert-warning" role="alert">
+            Error al ingresar pedido.
+        </div>
+        {% endif %}
+        {% if mensaje == 2 %}
+        <div class="alert alert-warning" role="alert">
+            Error con el stock, debe seleccionar una cantidad del producto menor al stock disponible.
+        </div>
+        {% endif %}
+    </div>
+    <form method="POST" class="post-form">{% csrf_token %}
+        <label for="comboTipoVenta">Seleccione el tipo de venta:</label>
+        <select class="form-control" name="comboTipoVenta" id="comboTipoVenta" required>
+            <option selected disabled value="">Seleccione un valor</option>
+            <option value="Interna">Interna</option>
+            <option value="Externa">Externa</option>
+        </select>
+        <div class="row">
+            <div class="col-lg-9">
+                <label for="comboProducto">Seleccione el producto:</label>
+                <select name="comboProducto" class="form-control" id="comboProducto" required>
+                    {% for producto in productos %}
+                    <option value="{{ producto.id_producto }}">{{ producto.nombre_producto}}
+                        {{producto.id_formato.nombre_formato}} - Stock disponible: {{producto.id_inventario.cantidad}} - Precio unitario: {{producto.precio_unitario}}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-lg-3">
+                <label for="inputCantidad">Cantidad del producto:</label>
+                <input class="form-control" type="number" name="inputCantidad" id="inputCantidad" required
+                    placeholder="Cantidad">
+            </div>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Realizar pedido</button>
+    </form>
+</div>
+{% endblock %}

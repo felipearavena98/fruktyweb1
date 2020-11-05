@@ -1,0 +1,15 @@
+{% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Registro transporte{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-4">Registro de transportes</h1>
+        <p class="lead">Llene los datos solicitados y podrá registrar su transporte para participar en subastas y entregas.</p>
+    </div>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+</div>
+{% endblock %}

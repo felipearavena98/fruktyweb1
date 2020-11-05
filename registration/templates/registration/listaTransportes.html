@@ -1,0 +1,38 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Lista transportes{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-4">Listado de transportes</h1>
+        <p class="lead">Aqui podra ver sus transportes registrados previamente. Sólo los que vea aqui podrá utilizar para participar en subastas y posteriores entregas.</p>
+    </div>
+    <table class="table">
+        <thead class="table-danger table-bordered table-hover">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Tamaño</th>
+                <th scope="col">Capacidad</th>
+                <th scope="col">Refrigeracion</th>
+                <th scope="col">Nombre dueño</th>
+            </tr>
+        </thead>
+        {% for transporte in transportes %}
+        <tbody>
+            <tr>
+                <td>{{ transporte.id_transporte}}</td>
+                <td>{{transporte.tamanio}}</td>
+                <td>{{transporte.capacidad_carga}} Kg.</td>
+                {% if transporte.refrigeracion == 'S' %}
+                <td>Disponible</td>
+                {% else %}
+                <td>No disponible</td>
+                {% endif%}
+                <td>{{transporte.id_cliente}}</td>
+            </tr>
+        </tbody>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

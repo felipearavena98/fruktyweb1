@@ -1,0 +1,48 @@
+{% extends 'core/base.html' %}
+
+{% load cart_tags %}
+
+{% block title %}Tienda{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row" enctype="multipart/form-data">
+        <div class="col-9">
+            <div class="row">
+                {% for product in lista %}
+                <div class="col-md-3 col-sm-12 col-lg-4">
+                    <div class="card" style="width: 100%">
+                        {% if  product.imagen %}
+                        <img src="data:imagen/jpg;base64, {{ product.imagen }}" style="width:100%;" class="card-img-top" alt="{{ product.nombre_producto }}" />                             
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title"> {{ product.data.1 }}</h5>
+                            <p class="card-text"><h6>Cantidad en Stock: {{ product.data.9 }}</h6></p>
+                            <p class="card-text">$ {{ product.data.6 }}</p>
+                            
+                        </div>
+                        <div class='card-footer text-center'>
+                            <a href="{% url 'cart:add_product' product.data.0 %} " action="" class="btn btn-success">
+                                Añadir al carrito
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-3">
+            {% include 'widget.html' %}
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+{% endblock %}

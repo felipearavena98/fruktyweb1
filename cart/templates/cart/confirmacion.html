@@ -1,0 +1,62 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load cart_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}Confirmar Pedido{% endblock %}
+</head>
+{% block content %}
+<body>
+    <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Producto</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Agregar/Quitar</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% if request.session.cart.items %}
+                {% for key, value in request.session.cart.items %}
+                <tr>
+                    <td>{{ value.name }}</td>
+                    <td>{{ value.quantity }}</td>
+                    <td>
+                        <a href="{% url 'cart:add_product' value.product_id %}" class="btn btn-sm btn-success"> + </a>
+                        <a href="{% url 'cart:decrement_product' value.product_id %}" class="ml-2 btn-sm btn btn-danger"> - </a>
+                        {% load mathfilters %}
+                        Total:$ {{value.price|mul:value.quantity}}
+                    </td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="3">
+                        <div class="alert alert-danger text-center">
+                            No tienes productos en el carrito
+                        </div>
+                    </td>
+                </tr>
+            {% endif %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3">
+                    Total: $ {{ cart_total }}
+                </td>
+            </tr>
+            {% if request.session.cart.items %}
+                <tr>
+                    <td colspan="3">
+                        <a href="{% url 'process_order' %}" class="btn btn-success">Crear pedido</a>
+                    </td>
+                </tr>
+            {% endif %}
+        </tfoot>
+    </table>
+      
+</body>
+</html>
