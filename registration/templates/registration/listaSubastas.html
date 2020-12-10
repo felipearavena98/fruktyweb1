@@ -1,0 +1,70 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Lista subastas{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-4">Listado de subastas</h1>
+        <p class="lead">Aqui podra ver las subastas disponibles para postular. Debe seleccionar su transporte deseado y
+            simplemente postular. Asi de simple!</p>
+        {% if mensaje == 2%}
+        <div class="alert alert-info" role="alert">
+            Ya postuló anteriormente a esta subasta. Espere los resultados!
+        </div>
+        {% endif %}
+        {% if mensaje == 1%}
+        <div class="alert alert-success" role="alert">
+            Postulacion ingresada correctamente.
+        </div>
+        {% endif %}
+        {% if mensaje == 0%}
+        <div class="alert alert-warning" role="alert">
+            Error al ingresar postulacion.
+        </div>
+        {% endif %}
+    </div>
+    <table class="table">
+        <thead class="table-danger table-bordered table-hover">
+            <tr>
+                <th scope="col">Tipo venta</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Producto</th>
+                <th scope="col">Plazo</th>
+                <th scope="col">Cobro por envio</th>
+                <th scope="col">Transporte</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        {% for subasta in lista %}
+        <tbody>
+            <tr>
+                <form method="POST" class="post-form">{% csrf_token %}
+                    <td>{{subasta.1}}</td>
+                    <td>{{subasta.2}}</td>
+                    <td>{{subasta.3}}: {{subasta.5}} {{subasta.4}}</td>
+                    <td>{{subasta.6}}</td>
+                    <td><input class="form-control" type="number" name="inputCobro" id="inputCobro" min="1" max="999999" required
+                            placeholder="$"></td>
+                    <td> <select name="comboTransporte" class="form-control" id="comboTransporte" required>
+                            {% for transporte in transportes %}
+                            <option value="{{ transporte.id_transporte }}">{{ transporte.id_transporte}}:
+                                {{transporte.tamanio}} {{transporte.capacidad_carga}} KG.
+                            </option>
+                            {% endfor %}
+                        </select>
+                    <td>
+                        {% if subasta.2 == 'Pendiente' %}
+                        <input type="text" hidden value="{{subasta.0}}" name="inputId" id="inputIdProceso">
+                        <input type="text" hidden value="{{subasta.8}}" name="inputId" id="inputId">
+                        <button class="btn" name="btnAccion" class="dropdown-item" type="submit"
+                            value="postular">Postular</button>
+                        {% endif %}
+                </form>
+                </td>
+            </tr>
+        </tbody>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

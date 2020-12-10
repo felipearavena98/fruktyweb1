@@ -1,0 +1,34 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Lista subastas{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-4">Listado de subastas ganadas</h1>
+        <p class="lead">Aqui podra ver las subastas que ha logrado ganar. Felicitaciones!</p>
+    </div>
+    <table class="table">
+        <thead class="table-danger table-bordered table-hover">
+            <tr>
+                <th scope="col">ID Subasta</th>
+                <th scope="col">Plazo</th>
+                <th scope="col">ID Transporte</th>
+                <th scope="col">Monto a cobrar</th>
+                <th scope="col">Productos a llevar</th>
+                <th scope="col">Seguro asignado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for subasta in lista %}
+            <tr>
+                <td>{{subasta.0}}</td>
+                <td>{{subasta.2}}</td>
+                <td>{{subasta.3}}</td>
+                <td>$ {{subasta.4}}</td>
+                <td>{{subasta.6}} {{subasta.7}} {{subasta.8}}</td>
+                <td>N° {{subasta.5}}</td>
+            </tr>
+            {% endfor%}
+    </table>
+</div>
+{% endblock %}

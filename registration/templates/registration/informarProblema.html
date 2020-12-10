@@ -1,0 +1,26 @@
+{% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-4">Informar problema</h1>
+        <p class="lead">Si tiene algun problema que reportar, ingrese los datos solicitados y un administrador verá su
+            caso.</p>
+    </div>
+    <form method="POST" class="post-form" action="{% url 'informe' %}">{% csrf_token %}
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>Informando problema para pedido N°: {{id_pedido}}</h4>
+                <br>
+                <input type="number" class="form-control col-sm-10" name="inputId" id="inputId" value="{{id_pedido}}"
+                readonly hidden/>
+                <label for="inputDescripcion">Escriba descripcion del problema:</label>
+                <textarea class="form-control" placeholder="Ejemplo: El producto no venia en buen estado. Venian los productos destruidos y/o podridos. "
+                    id="inputDescripcion" name="inputDescripcion"></textarea>
+            </div>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Ingresar</button>
+    </form>
+</div>
+{% endblock %}

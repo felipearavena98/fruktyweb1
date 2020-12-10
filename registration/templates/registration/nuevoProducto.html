@@ -49,12 +49,12 @@
             </div>
             <div class="col-lg-4">
                 <label for="inputCantidad">Escriba la cantidad disponible del producto:</label>
-                <input class="form-control" type="number" name="inputCantidad" id="inputCantidad" required
+                <input class="form-control" type="number" name="inputCantidad" id="inputCantidad" min="0" max="9999" required
                     placeholder="Ejemplo: 25">
             </div>
         </div>
         <label for="inputPrecio">Escriba el precio unitario del producto en CLP:</label>
-        <input class="form-control" type="number" name="inputPrecio" id="inputPrecio" required
+        <input class="form-control" type="number" name="inputPrecio" id="inputPrecio" min="0" required
             placeholder="Si indica por ejemplo: 1000 y su formato es 'Caja', cada caja tendrá ese valor.">
         <br>
         <button type="submit" class="btn btn-primary">Realizar solicitud de ingreso</button>

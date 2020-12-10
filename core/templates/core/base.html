@@ -40,7 +40,17 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="{% url 'registroTransporte' %}">Registrar transporte</a>
               <a class="dropdown-item" href="{% url 'listaTransportes' %}">Ver mis transportes</a>
-              <a class="dropdown-item" href="#">Completar transporte</a>
+              <a class="dropdown-item" href="{% url 'listaViajes' %}">Mis viajes</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Subastas
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'listaSubastas' %}">Ver subastas</a>
+              <a class="dropdown-item" href="{% url 'listaSubastasGanadas' %}">Mis subastas ganadas</a>
             </div>
           </li>
           {% endif %}

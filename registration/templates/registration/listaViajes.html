@@ -1,0 +1,67 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Lista viajes{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-4">Listado de viajes</h1>
+        <p class="lead">Aqui podra ver los viajes pendientes o en curso, y así llevarles un seguimiento y mantenerse
+            organizado.</p>
+    </div>
+    {% if mensaje == 2%}
+    <div class="alert alert-success" role="alert">
+        Viaje finalizado exitosamente. Gracias por sus servicios!
+    </div>
+    {% endif %}
+    {% if mensaje == 1%}
+    <div class="alert alert-success" role="alert">
+        Viaje iniciado. Buena suerte!
+    </div>
+    {% endif %}
+    {% if mensaje == 0%}
+    <div class="alert alert-warning" role="alert">
+        Error el procesar viaje.
+    </div>
+    {% endif %}
+    <table class="table">
+        <thead class="table-danger table-bordered table-hover">
+            <tr>
+                <th scope="col">ID Subasta</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Plazo</th>
+                <th scope="col">ID Transporte</th>
+                <th scope="col">Monto a cobrar</th>
+                <th scope="col">Productos a llevar</th>
+                <th scope="col">Seguro asignado</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for subasta in lista %}
+            <tr>
+                <form method="POST" class="post-form">{% csrf_token %}
+                    <td>{{subasta.0}}</td>
+                    <td>{{subasta.1}}</td>
+                    <td>{{subasta.2}}</td>
+                    <td>{{subasta.3}}</td>
+                    <td>$ {{subasta.4}}</td>
+                    <td>{{subasta.6}} {{subasta.7}} {{subasta.8}}</td>
+                    <td>N° {{subasta.5}}</td>
+                    <td>
+                        {% if subasta.1 == 'Pendiente' %}
+                        <input type="text" hidden value="{{subasta.9}}" name="inputId" id="inputId">
+                        <button class="btn" name="btnAccionIniciar" class="dropdown-item" type="submit"
+                            value="iniciar">Iniciar</button>
+                        {% endif %}
+                        {% if subasta.1 == 'En viaje' %}
+                        <input type="text" hidden value="{{subasta.9}}" name="inputId" id="inputId">
+                        <button class="btn" name="btnAccionFinalizar" class="dropdown-item" type="submit"
+                            value="finalizar">Finalizar</button>
+                        {% endif %}
+                    </td>
+                </form>
+            </tr>
+            {% endfor%}
+    </table>
+</div>
+{% endblock %}

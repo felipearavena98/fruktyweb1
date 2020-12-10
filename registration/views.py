@@ -79,6 +79,123 @@ def lista_transportes(request):
     return render(request, 'registration/listaTransportes.html', {'transportes': transportes})
 
 
+def postulacion(cobro, id_subasta, id_transporte, id_cliente):
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    salida = cursor.var(cx_Oracle.NUMBER)
+    cursor.callproc('SP_POSTULAR_SUBASTA', [
+                    cobro, id_subasta, id_transporte, id_cliente, salida])
+    return salida.getvalue()
+
+
+def verificar(id_cliente, id_subasta):
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    salida = cursor.var(cx_Oracle.NUMBER)
+    cursor.callproc('SP_VERIFICAR_POSTULACION', [
+                    id_cliente, id_subasta, salida])
+    return salida.getvalue()
+
+
+def lista_subastas(request):
+    transportes = Transporte.objects.filter(id_cliente=request.user)
+    id_cliente = request.user.id_cliente
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    out_cur = django_cursor.connection.cursor()
+    cursor.callproc("SP_LISTAR_SUBASTAS", [out_cur])
+    lista = []
+    verificaciones = []
+    mensaje = ''
+    for fila in out_cur:
+        lista.append(fila)
+    if request.method == 'POST':
+        id_subasta = request.POST.get('inputId')
+        cobro = request.POST.get('inputCobro')
+        id_transporte = request.POST.get('comboTransporte')
+        salida = postulacion(cobro, id_subasta, id_transporte, id_cliente)
+        mensaje = salida
+    return render(request, 'registration/listaSubastas.html', {'lista': lista, 'transportes': transportes, 'mensaje': mensaje, 'verificaciones': verificaciones})
+
+
+def lista_viajes(request):
+    return render(request, 'registration/listaViajes.html')
+
+
+def lista_subastas_ganadas(request):
+    id_cliente = request.user.id_cliente
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    out_cur = django_cursor.connection.cursor()
+    cursor.callproc("SP_SUBASTAS_GANADAS", [id_cliente, out_cur])
+    lista = []
+    for fila in out_cur:
+        lista.append(fila)
+    return render(request, 'registration/listaSubastasGanadas.html', {'lista':lista})
+
+def lista_viajes(request):
+    id_cliente = request.user.id_cliente
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    out_cur = django_cursor.connection.cursor()
+    cursor.callproc("SP_SUBASTAS_GANADAS", [id_cliente, out_cur])
+    lista = []
+    mensaje = ''
+    for fila in out_cur:
+        lista.append(fila)
+    if 'btnAccionIniciar' in request.POST:
+        id_pventa = request.POST.get('inputId')
+        salida = iniciar_viaje(id_pventa)
+        mensaje = salida
+    if 'btnAccionFinalizar' in request.POST:
+        id_pventa = request.POST.get('inputId')
+        salida = finalizar_viaje(id_pventa)
+        mensaje = salida
+        id_cliente = request.user.id_cliente
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    out_cur = django_cursor.connection.cursor()
+    cursor.callproc("SP_SUBASTAS_GANADAS", [id_cliente, out_cur])
+    lista = []
+    for fila in out_cur:
+        lista.append(fila)
+    return render(request, 'registration/listaViajes.html', {'lista':lista, 'mensaje':mensaje})
+
+
+def problema(id_pedido, descripcion, estado):
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    salida = cursor.var(cx_Oracle.NUMBER)
+    cursor.callproc('SP_PROBLEMA', [id_pedido, descripcion, estado, salida])
+    return salida.getvalue()
+
+def iniciar_viaje(id_pventa):
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    salida = cursor.var(cx_Oracle.NUMBER)
+    cursor.callproc('SP_INICIAR_VIAJE', [id_pventa, salida])
+    return salida.getvalue()
+
+def finalizar_viaje(id_pventa):
+    django_cursor = connection.cursor()
+    cursor = django_cursor.connection.cursor()
+    salida = cursor.var(cx_Oracle.NUMBER)
+    cursor.callproc('SP_FINALIZAR_VIAJE', [id_pventa, salida])
+    return salida.getvalue()
+
+def nuevo_Problema(request):
+    if request.method == 'POST':
+        id_pedido = request.POST.get('inputId')
+        descripcion = request.POST.get('inputDescripcion')
+        id_cliente = request.user.id_cliente
+        estado = "Ingresado"
+        salida = problema(id_pedido, descripcion, estado)
+        mensaje = salida
+    else:
+        mensaje = ''
+    return render(request, 'registration/informe.html', {'mensaje': mensaje})
+
+
 def pedido(tipo_venta, id_producto, cantidad, id_cliente, fecha):
     django_cursor = connection.cursor()
     cursor = django_cursor.connection.cursor()
@@ -141,6 +258,7 @@ def lista_pedidos(request):
 
         if accion == "informar":
             id_pedido = request.POST.get("inputId")
+            return render(request, 'registration/informarProblema.html', {'id_pedido': id_pedido})
     else:
         django_cursor = connection.cursor()
         cursor = django_cursor.connection.cursor()

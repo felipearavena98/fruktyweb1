@@ -41,7 +41,7 @@
                 <td>${{pedido.7}}</td>
                 <td>
                     {% if pedido.2 == 'Enviado' %}
-                    <form method="POST" class="post-form" action="{% url 'confirmarPedido' %}" >{% csrf_token %}
+                    <form method="POST" class="post-form">{% csrf_token %}
                         <input type="text" hidden value="{{pedido.0}}" name="inputId" id="inputId">
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
@@ -49,9 +49,9 @@
                                 Acciones
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                <button name="btnAccion" class="dropdown-item" type="submit" value="confirmar">Confirmar
+                                <button name="btnAccion" class="dropdown-item" type="submit" value="confirmar" formaction="{% url 'confirmarPedido' %}">Confirmar
                                     recepcion.</button>
-                                <button name="btnAccion" class="dropdown-item" type="submit" value="informar">Informar
+                                <button name="btnAccion" class="dropdown-item" type="submit" value="informar" formaction="{% url 'informarProblema' %}">Informar
                                     problema.</button>
                             </div>
                         </div>

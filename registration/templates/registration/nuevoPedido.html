@@ -25,9 +25,7 @@
     <form method="POST" class="post-form">{% csrf_token %}
         <label for="comboTipoVenta">Seleccione el tipo de venta:</label>
         <select class="form-control" name="comboTipoVenta" id="comboTipoVenta" required>
-            <option selected disabled value="">Seleccione un valor</option>
-            <option value="Interna">Interna</option>
-            <option value="Externa">Externa</option>
+            <option selected value="Externa">Externa</option>
         </select>
         <div class="row">
             <div class="col-lg-9">
